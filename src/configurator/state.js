@@ -25,6 +25,11 @@ export function createConfiguratorStore(defaultState) {
       state.cover = visible;
       publish();
     },
+    setColor(part, color) {
+      if (state.colors[part] === color) return;
+      state.colors[part] = color;
+      publish();
+    },
     reset() {
       state = copy(defaultState);
       publish();

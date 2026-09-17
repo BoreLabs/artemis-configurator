@@ -22,11 +22,20 @@ export const artemisConfig = {
     name: 'COVER',
     asset: modelPath('COVER.glb'),
   },
+  colors: [
+    { id: 'bleu-nuit', name: 'Bleu nuit', value: '#0b2447' },
+    { id: 'bleu-artemis', name: 'Bleu ARTEMIS', value: '#145da0' },
+    { id: 'bleu-glacier', name: 'Bleu glacier', value: '#5ca9e6' },
+  ],
 };
 
 export const defaultConfiguration = {
   base: 'base-standard',
   cover: true,
+  colors: {
+    base: 'bleu-nuit',
+    cover: 'bleu-artemis',
+  },
 };
 
 export function findOption(options, id) {

@@ -3,11 +3,26 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { findOption } from '../data/artemis-config.js';
 import { loadModel } from './model-loader.js';
 
-function prepareModel(object) {
+function prepareModel(object, colors) {
   object.traverse((child) => {
     if (!child.isMesh) return;
+    const part = child.name.toLowerCase().includes('capot') ? 'cover' : 'base';
+    const sourceMaterials = Array.isArray(child.material) ? child.material : [child.material];
+    const materials = sourceMaterials.map((sourceMaterial) => {
+      const material = sourceMaterial.clone();
+      material.color?.set(colors[part]);
+      return material;
+    });
+    child.material = Array.isArray(child.material) ? materials : materials[0];
     child.castShadow = true;
     child.receiveShadow = true;
+  });
+}
+
+function disposeMaterials(object) {
+  object.traverse((child) => {
+    if (!child.isMesh) return;
+    (Array.isArray(child.material) ? child.material : [child.material]).forEach((material) => material.dispose());
   });
 }
 
@@ -121,12 +136,17 @@ export function createViewer(host, onAssetStatus = () => {}) {
   async function render(configuration, catalog) {
     version += 1;
     const currentVersion = version;
+    disposeMaterials(assembly);
     assembly.clear();
     assembly.scale.setScalar(1);
     assembly.position.set(0, 0, 0);
     onAssetStatus('Chargement du modèle…');
 
     const base = findOption(catalog.bases, configuration.base);
+    const colors = {
+      base: findOption(catalog.colors, configuration.colors.base).value,
+      cover: findOption(catalog.colors, configuration.colors.cover).value,
+    };
     const parts = showFactoryAssembly
       ? [catalog.assembly]
       : [base, ...(configuration.cover ? [catalog.cover] : [])];
@@ -143,7 +163,7 @@ export function createViewer(host, onAssetStatus = () => {}) {
     }
 
     loadedModels.forEach((model) => {
-      prepareModel(model);
+      prepareModel(model, colors);
       assembly.add(model);
     });
     positionAssembly();
