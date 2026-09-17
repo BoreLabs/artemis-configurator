@@ -126,17 +126,16 @@ function disposeObject(object) {
 
 export function createViewer(host) {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#111514');
-  scene.fog = new THREE.Fog('#111514', 11, 22);
 
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-  camera.position.set(8.8, 6.4, 9.4);
+  camera.position.set(9.4, 6.7, 10.1);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.setClearColor('#000000', 0);
   host.append(renderer.domElement);
 
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -146,20 +145,30 @@ export function createViewer(host) {
   controls.maxDistance = 18;
   controls.maxPolarAngle = Math.PI * 0.48;
 
-  scene.add(new THREE.HemisphereLight('#e8f4ea', '#182020', 2.2));
-  const keyLight = new THREE.DirectionalLight('#ffffff', 3.2);
-  keyLight.position.set(5, 8, 6);
+  scene.add(new THREE.HemisphereLight('#edf5ff', '#4a3b2b', 2.1));
+  const keyLight = new THREE.DirectionalLight('#ffffff', 4.4);
+  // The key light deliberately comes from the left of the viewer.
+  keyLight.position.set(-8, 10, 10);
   keyLight.castShadow = true;
+  keyLight.shadow.mapSize.set(2048, 2048);
+  keyLight.shadow.camera.near = 0.1;
+  keyLight.shadow.camera.far = 30;
   scene.add(keyLight);
-  const rimLight = new THREE.PointLight('#df4938', 25, 14);
-  rimLight.position.set(-5, 2, -4);
-  scene.add(rimLight);
+  const fillLight = new THREE.DirectionalLight('#d9e7f3', 1.25);
+  fillLight.position.set(7, 4, 4);
+  scene.add(fillLight);
+  const warmBounce = new THREE.PointLight('#ffe7c2', 7, 16);
+  warmBounce.position.set(2, -0.5, -5);
+  scene.add(warmBounce);
 
-  const floor = new THREE.Mesh(new THREE.CircleGeometry(7.4, 64), new THREE.MeshStandardMaterial({ color: '#0a0d0d', roughness: 0.85, metalness: 0.05 }));
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -3.45;
-  floor.receiveShadow = true;
-  scene.add(floor);
+  const deskShadow = new THREE.Mesh(
+    new THREE.PlaneGeometry(24, 18),
+    new THREE.ShadowMaterial({ color: '#221307', opacity: 0.34 }),
+  );
+  deskShadow.rotation.x = -Math.PI / 2;
+  deskShadow.position.y = -3.12;
+  deskShadow.receiveShadow = true;
+  scene.add(deskShadow);
 
   const assembly = new THREE.Group();
   scene.add(assembly);
@@ -179,6 +188,7 @@ export function createViewer(host) {
   function render(configuration, catalog) {
     version += 1;
     const currentVersion = version;
+    deskShadow.position.y = configuration.accessories['raised-feet'] ? -3.66 : -3.12;
     while (assembly.children.length) {
       const child = assembly.children.pop();
       disposeObject(child);
