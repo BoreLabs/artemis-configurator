@@ -8,7 +8,7 @@ function assetUrl(path) {
   return `${import.meta.env.BASE_URL}${path}`;
 }
 
-export async function loadOptionalModel(path) {
+export async function loadModel(path) {
   if (!path || unavailable.has(path)) return null;
 
   if (cache.has(path)) return cache.get(path).clone(true);
@@ -18,7 +18,6 @@ export async function loadOptionalModel(path) {
     cache.set(path, gltf.scene);
     return gltf.scene.clone(true);
   } catch {
-    // The prototype remains usable before production GLB files are supplied.
     unavailable.add(path);
     return null;
   }

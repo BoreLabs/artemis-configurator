@@ -15,24 +15,14 @@ export function createConfiguratorStore(defaultState) {
       subscribers.add(subscriber);
       return () => subscribers.delete(subscriber);
     },
-    setColor(color) {
-      state.color = color;
+    setBase(base) {
+      if (state.base === base) return;
+      state.base = base;
       publish();
     },
-    setSlot(slot, option) {
-      state.slots[slot] = option;
-      publish();
-    },
-    setPsuStyle(style) {
-      state.psuShroud.style = style;
-      publish();
-    },
-    setPsuPosition(position) {
-      state.psuShroud.position = position;
-      publish();
-    },
-    setAccessory(accessory, enabled) {
-      state.accessories[accessory] = enabled;
+    setCover(visible) {
+      if (state.cover === visible) return;
+      state.cover = visible;
       publish();
     },
     reset() {

@@ -1,6 +1,5 @@
 import './style.css';
 import { artemisConfig, defaultConfiguration } from './data/artemis-config.js';
-import { evaluateCompatibility } from './configurator/compatibility.js';
 import { createConfiguratorStore } from './configurator/state.js';
 import { createViewer } from './viewer/scene.js';
 import { renderControls } from './ui/controls.js';
@@ -15,35 +14,24 @@ app.innerHTML = `
     <section class="viewer-shell" aria-label="Aperçu 3D du boîtier configuré">
       <div class="viewer-copy"><span>Vue interactive</span><p>Glisser pour tourner · Molette pour zoomer</p></div>
       <div id="viewer" class="viewer"></div>
-      <div class="viewer-footer"><span id="asset-status">Aperçu de conception</span><button id="reset-button" type="button">Réinitialiser</button></div>
+      <div class="viewer-footer"><span id="asset-status">Chargement d’ARTEMIS…</span><button id="reset-button" type="button">Réinitialiser</button></div>
     </section>
     <aside class="configuration-panel">
-      <div class="panel-intro"><p class="eyebrow">Bore Labs / 001</p><h1>ARTEMIS <span>ATX</span></h1><p>Composez votre boîtier, pièce par pièce.</p></div>
-      <div id="compatibility-status" class="compatibility-status" role="status"></div>
+      <div class="panel-intro"><p class="eyebrow">Bore Labs / 001</p><h1>ARTEMIS <span>ATX</span></h1><p>Configurez la base et la cover de votre boîtier.</p></div>
       <div id="controls" class="controls"></div>
-      <a id="product-link" class="product-link is-disabled" href="#" aria-disabled="true">Voir les pièces disponibles <span>↗</span></a>
     </aside>
   </main>`;
 
-const viewer = createViewer(document.querySelector('#viewer'));
+const assetStatus = document.querySelector('#asset-status');
+const viewer = createViewer(document.querySelector('#viewer'), (message) => {
+  assetStatus.textContent = message;
+});
 const store = createConfiguratorStore(defaultConfiguration);
 const controls = document.querySelector('#controls');
-const status = document.querySelector('#compatibility-status');
-const productLink = document.querySelector('#product-link');
 
 function updateInterface(configuration) {
   viewer.render(configuration, artemisConfig);
   renderControls(controls, configuration, artemisConfig, store);
-
-  const compatibility = evaluateCompatibility(configuration);
-  status.className = `compatibility-status ${compatibility.compatible ? 'is-compatible' : 'has-conflict'}`;
-  status.textContent = compatibility.compatible ? 'Configuration compatible' : compatibility.conflicts[0];
-
-  if (artemisConfig.product.productUrl) {
-    productLink.href = artemisConfig.product.productUrl;
-    productLink.classList.remove('is-disabled');
-    productLink.setAttribute('aria-disabled', 'false');
-  }
 }
 
 store.subscribe(updateInterface);
