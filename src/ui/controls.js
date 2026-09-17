@@ -7,8 +7,8 @@ function baseChoices(configuration, bases) {
 
 function colorChoices(colors, selectedColor, part) {
   return colors.map((color) => `
-    <button class="color-choice ${selectedColor === color.id ? 'is-active' : ''}" type="button" data-action="color" data-part="${part}" data-value="${color.id}" aria-label="${color.name}" aria-pressed="${selectedColor === color.id}">
-      <span style="--swatch:${color.value}"></span><b>${color.name}</b>
+    <button class="color-choice ${selectedColor === color.id ? 'is-active' : ''}" type="button" data-action="color" data-part="${part}" data-value="${color.id}" aria-label="${color.name}" aria-pressed="${selectedColor === color.id}" title="${color.name}">
+      <span style="--swatch:${color.value}"></span>
     </button>`).join('');
 }
 

@@ -17,7 +17,7 @@ app.innerHTML = `
       <div class="viewer-footer"><span id="asset-status">Chargement d’ARTEMIS…</span><button id="reset-button" type="button">Réinitialiser</button></div>
     </section>
     <aside class="configuration-panel">
-      <div class="panel-intro"><p class="eyebrow">Bore Labs / 001</p><h1>ARTEMIS <span>ATX</span></h1><p>Configurez la base et la cover de votre boîtier.</p></div>
+      <div class="panel-intro"><p class="eyebrow">Bore Labs / 001</p><h1>ARTEMIS <span>ITX</span></h1><p>Configurez la base et la cover de votre boîtier.</p></div>
       <div id="controls" class="controls"></div>
     </aside>
   </main>`;

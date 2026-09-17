@@ -21,7 +21,7 @@ Les modèles GLB actifs sont rangés dans `public/models/` :
 
 Les variantes interchangeables doivent partager l'origine, l'orientation et l'échelle de l'assemblage SolidWorks. Les options et leurs chemins de modèles sont centralisés dans `src/data/artemis-config.js`.
 
-La BASE et la COVER disposent chacune des teintes Bleu nuit, Bleu ARTEMIS et Bleu glacier. Le logo Intel fait actuellement partie du maillage et du matériau unique `Capot-1` de la cover : il suit donc sa couleur. Pour le teinter indépendamment, exportez-le comme un maillage ou matériau séparé, par exemple `LOGO_INTEL`.
+La BASE et la COVER disposent chacune de sept finitions : Bleu glacier, Noir graphite, Blanc céramique, Gris titane, Rouge signal, Vert forêt et Sable minéral. Le logo Intel fait actuellement partie du maillage et du matériau unique `Capot-1` de la cover : il suit donc sa couleur. Pour le teinter indépendamment, exportez-le comme un maillage ou matériau séparé, par exemple `LOGO_INTEL`.
 
 ## Publier sur GitHub Pages
 
