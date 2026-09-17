@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { findOption } from '../data/swap-config.js';
+import { findOption } from '../data/artemis-config.js';
 import { loadOptionalModel } from './model-loader.js';
 
 const darkMetal = () => new THREE.MeshStandardMaterial({ color: '#121617', metalness: 0.85, roughness: 0.32, name: 'METAL_INTERNAL' });
@@ -145,25 +145,18 @@ export function createViewer(host) {
   controls.maxDistance = 18;
   controls.maxPolarAngle = Math.PI * 0.48;
 
-  scene.add(new THREE.HemisphereLight('#edf5ff', '#4a3b2b', 2.1));
+  scene.add(new THREE.HemisphereLight('#eaf5ff', '#071425', 2.1));
   const keyLight = new THREE.DirectionalLight('#ffffff', 4.4);
-  // The key light deliberately comes from the left of the viewer.
-  keyLight.position.set(-8, 10, 10);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(2048, 2048);
   keyLight.shadow.camera.near = 0.1;
   keyLight.shadow.camera.far = 30;
-  scene.add(keyLight);
-  const fillLight = new THREE.DirectionalLight('#d9e7f3', 1.25);
-  fillLight.position.set(7, 4, 4);
-  scene.add(fillLight);
-  const warmBounce = new THREE.PointLight('#ffe7c2', 7, 16);
-  warmBounce.position.set(2, -0.5, -5);
-  scene.add(warmBounce);
+  const fillLight = new THREE.DirectionalLight('#c9e4ff', 1.25);
+  scene.add(keyLight, keyLight.target, fillLight, fillLight.target);
 
   const deskShadow = new THREE.Mesh(
     new THREE.PlaneGeometry(24, 18),
-    new THREE.ShadowMaterial({ color: '#221307', opacity: 0.34 }),
+    new THREE.ShadowMaterial({ color: '#020817', opacity: 0.38 }),
   );
   deskShadow.rotation.x = -Math.PI / 2;
   deskShadow.position.y = -3.12;
@@ -173,6 +166,35 @@ export function createViewer(host) {
   const assembly = new THREE.Group();
   scene.add(assembly);
   let version = 0;
+  const cameraForward = new THREE.Vector3();
+  const cameraRight = new THREE.Vector3();
+  const cameraLeft = new THREE.Vector3();
+  const lightTarget = new THREE.Vector3();
+  const worldUp = new THREE.Vector3(0, 1, 0);
+
+  function updateCameraLighting() {
+    camera.getWorldDirection(cameraForward);
+    cameraRight.crossVectors(cameraForward, worldUp).normalize();
+    cameraLeft.copy(cameraRight).multiplyScalar(-1);
+    lightTarget.copy(controls.target);
+
+    keyLight.position
+      .copy(lightTarget)
+      .addScaledVector(cameraLeft, 8.5)
+      .addScaledVector(cameraForward, -5.5)
+      .addScaledVector(worldUp, 9.5);
+    keyLight.target.position.copy(lightTarget);
+
+    fillLight.position
+      .copy(lightTarget)
+      .addScaledVector(cameraRight, 5.5)
+      .addScaledVector(cameraForward, -3.5)
+      .addScaledVector(worldUp, 4.5);
+    fillLight.target.position.copy(lightTarget);
+
+    keyLight.target.updateMatrixWorld();
+    fillLight.target.updateMatrixWorld();
+  }
 
   function resize() {
     const { width, height } = host.getBoundingClientRect();
@@ -222,6 +244,7 @@ export function createViewer(host) {
 
   function animate() {
     controls.update();
+    updateCameraLighting();
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }

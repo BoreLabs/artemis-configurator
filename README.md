@@ -1,6 +1,6 @@
-# Bore Labs SWAP Configurator
+# Bore Labs ARTEMIS Configurator
 
-Application statique Vite + Three.js pour configurer le boîtier modulaire SWAP.
+Application statique Vite + Three.js pour configurer le boîtier modulaire ARTEMIS.
 
 ## Démarrer
 
@@ -13,11 +13,11 @@ Ouvrir l'adresse affichée par Vite. Pour produire le site statique, exécuter `
 
 ## Ajouter les modèles de production
 
-Déposer les fichiers GLB dans `public/models/` en respectant les noms définis dans `src/data/swap-config.js`, par exemple `swap_front_mesh.glb`. Le configurateur tentera alors automatiquement de charger le modèle en remplacement de l'aperçu de conception.
+Déposer les fichiers GLB dans `public/models/` en respectant les noms définis dans `src/data/artemis-config.js`, par exemple `artemis_front_mesh.glb`. Le configurateur tentera alors automatiquement de charger le modèle en remplacement de l'aperçu de conception.
 
 Les variantes interchangeables doivent partager l'origine, l'orientation et l'échelle de l'assemblage SolidWorks. N'ajoutez pas de correctifs de position au JavaScript pour compenser un export mal aligné. Les matériaux qui peuvent changer de couleur doivent être nommés `CASE_PAINT` dans les GLB.
 
-Les options, leurs chemins de modèles, les couleurs et les liens produits sont centralisés dans `src/data/swap-config.js`. Les règles métier restent dans `src/configurator/compatibility.js`.
+Les options, leurs chemins de modèles, les couleurs et les liens produits sont centralisés dans `src/data/artemis-config.js`. Les règles métier restent dans `src/configurator/compatibility.js`.
 
 ## Publier sur GitHub Pages
 
