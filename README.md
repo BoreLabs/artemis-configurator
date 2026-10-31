@@ -1,6 +1,6 @@
-# Bore Labs ARTEMIS Configurator
+# Bore Labs — catalogue et configurateur Artemis
 
-Application statique Vite + Three.js pour configurer le boîtier modulaire ARTEMIS.
+Site statique Vite + Three.js pour présenter les univers Bore Labs : boîtiers, accessoires et décoration autour de la tech et du gaming. Artemis est le premier boîtier disponible et conserve son configurateur 3D.
 
 ## Démarrer
 
@@ -9,20 +9,21 @@ pnpm install
 pnpm dev
 ```
 
-Ouvrir l'adresse affichée par Vite. Pour produire le site statique, exécuter `pnpm build`; le résultat est dans `dist/` et peut être publié sur GitHub Pages.
+`pnpm build` produit le site dans `dist/`. Le workflow GitHub Actions publie la branche `main` sur GitHub Pages.
 
-## Modèles de production
+## Structure
 
-Les modèles GLB actifs sont rangés dans `public/models/` :
+- `src/data/catalog.js` : navigation et contenu des univers.
+- `src/main.js` : pages, onglets et intégration du configurateur.
+- `src/data/artemis-config.js` : options et chemins des modèles Artemis.
+- `src/configurator/` et `src/ui/` : état et commandes du configurateur.
+- `src/viewer/` : scène Three.js et chargement des GLB.
 
-- `ARTEMIS.glb` : assemblage complet affiché au chargement.
-- `BASE.glb` : base du boîtier, prête à accueillir de futures variantes.
-- `COVER.glb` : cover affichée ou retirée avec son interrupteur.
+Les sections Accessoires et Décoration annoncent des collections en préparation. Aucun produit fictif ni action d’achat n’est affiché. La navigation utilise des fragments d’URL (`#boitiers`, `#artemis`, etc.) afin que les sections soient partageables sur GitHub Pages sans routage serveur.
 
-Les variantes interchangeables doivent partager l'origine, l'orientation et l'échelle de l'assemblage SolidWorks. Les options et leurs chemins de modèles sont centralisés dans `src/data/artemis-config.js`.
+## Modèles 3D
 
-La BASE et la COVER disposent chacune de sept finitions : Bleu glacier, Noir graphite, Blanc céramique, Gris titane, Rouge signal, Vert forêt et Sable minéral. Le logo Intel fait actuellement partie du maillage et du matériau unique `Capot-1` de la cover : il suit donc sa couleur. Pour le teinter indépendamment, exportez-le comme un maillage ou matériau séparé, par exemple `LOGO_INTEL`.
+Les fichiers actifs sont dans `public/models/` : `ARTEMIS.glb` (assemblage initial), `BASE.glb` et `COVER.glb`. Les variantes doivent partager l’origine, l’orientation et l’échelle de l’assemblage. Leurs chemins et finitions se configurent dans `src/data/artemis-config.js`.
 
-## Publier sur GitHub Pages
+Le logo Intel fait actuellement partie du maillage et matériau `Capot-1` de la cover. Il suit donc sa couleur. Pour le teinter indépendamment, exportez-le comme maillage ou matériau séparé.
 
-Le workflow `.github/workflows/deploy.yml` compile le site et publie `dist/` à chaque envoi sur la branche `main`. Connectez ensuite ce dépôt à un dépôt GitHub, poussez `main`, puis choisissez **GitHub Actions** dans **Settings → Pages**. GitHub fournira l'URL de publication dans l'exécution du workflow.
