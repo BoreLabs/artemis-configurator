@@ -5,7 +5,7 @@ import { createConfiguratorStore } from './configurator/state.js';
 import { renderControls } from './ui/controls.js';
 
 const app = document.querySelector('#app');
-const goButton = (id, label, className = 'text-button') => `<button type="button" class="${className} action-button" data-go="${id}"><span class="button-label" data-text="${label}">${label}</span><span class="button-icon" aria-hidden="true">↗</span></button>`;
+const goButton = (id, label, className = 'text-button') => `<button type="button" class="${className} action-button" data-go="${id}"><span class="button-label">${label}</span><span class="button-icon" aria-hidden="true">↗</span></button>`;
 const cards = categories.map(({ id, number, title, description, detail }) => `<button class="category-card" type="button" data-go="${id}"><span class="card-top">${number} / UNIVERS <span class="card-arrow" aria-hidden="true">↗</span></span><strong>${title}</strong><span class="card-description">${description}</span><span class="card-bottom">${detail}</span></button>`).join('');
 
 app.innerHTML = `

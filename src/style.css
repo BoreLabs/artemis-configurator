@@ -120,20 +120,23 @@ main { min-height: calc(100vh - 148px); }
   transition: transform .24s ease, box-shadow .24s ease;
 }
 .action-button:hover { transform: translateY(-2px); }
-.button-label { position: relative; display: inline-block; }
-.button-label::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  white-space: nowrap;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path .3s cubic-bezier(.2,.7,.2,1);
+.button-label {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--label-hover) 50%, var(--label-rest) 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  transition: background-position .3s cubic-bezier(.2,.7,.2,1);
 }
-.action-button:hover .button-label::after, .action-button:focus-visible .button-label::after { clip-path: inset(0 0 0 0); }
+.action-button:hover .button-label, .action-button:focus-visible .button-label { background-position: 0 0; }
 .button-icon { font-size: 17px; font-weight: 400; transition: transform .25s ease; }
 .action-button:hover .button-icon { transform: translate(2px,-2px); }
 .primary-button {
+  --label-rest: #fff;
+  --label-hover: #202521;
   overflow: hidden;
   padding: 0 19px;
   border: 1px solid var(--ink);
@@ -151,10 +154,8 @@ main { min-height: calc(100vh - 148px); }
   transition: transform .32s cubic-bezier(.2,.7,.2,1);
 }
 .primary-button:hover::before, .primary-button:focus-visible::before { transform: scaleX(1); }
-.primary-button .button-label::after { color: var(--ink); }
 .primary-button:hover .button-icon { color: var(--ink); }
-.text-button, .back-button { padding: 0 2px; border: 0; border-bottom: 1px solid #aab1a8; background: transparent; color: var(--ink); border-radius: 0; }
-.text-button .button-label::after, .back-button .button-label::after { color: var(--accent); }
+.text-button, .back-button { --label-rest: #202521; --label-hover: #b76a44; padding: 0 2px; border: 0; border-bottom: 1px solid #aab1a8; background: transparent; color: var(--ink); border-radius: 0; }
 .text-button:hover .button-icon, .back-button:hover .button-icon { color: var(--accent); }
 
 .hero { position: relative; display: grid; grid-template-columns: 51% 49%; min-height: 620px; background: var(--paper); }
