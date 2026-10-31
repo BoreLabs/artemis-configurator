@@ -19,6 +19,8 @@ pnpm dev
 - `src/configurator/` et `src/ui/` : état et commandes du configurateur.
 - `src/viewer/` : scène Three.js et chargement des GLB.
 
+L’interface utilise des polices système et des transitions CSS courtes. Le module Three.js est chargé seulement lorsque l’onglet Artemis est ouvert, pour garder l’accueil léger. Les animations sont désactivées lorsque le navigateur demande une réduction du mouvement.
+
 Les sections Accessoires et Décoration annoncent des collections en préparation. Aucun produit fictif ni action d’achat n’est affiché. La navigation utilise des fragments d’URL (`#boitiers`, `#artemis`, etc.) afin que les sections soient partageables sur GitHub Pages sans routage serveur.
 
 ## Modèles 3D
