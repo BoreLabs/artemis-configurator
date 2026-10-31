@@ -1,6 +1,6 @@
 # Bore Labs — catalogue et configurateur Artemis
 
-Site statique Vite + Three.js pour présenter les univers Bore Labs : PC, Boîtier, Setup, Gadget et Déco. Artemis est le premier boîtier disponible et conserve son configurateur 3D.
+Site statique Vite + Three.js pour présenter les univers Bore Labs : PC, Boîtier, Setup, Gadget et Déco. Artemis se trouve dans la catégorie PC et conserve son configurateur 3D.
 
 ## Démarrer
 
@@ -21,7 +21,7 @@ pnpm dev
 
 L’interface utilise des polices système et des transitions CSS courtes. Le module Three.js est chargé seulement lorsque l’onglet Artemis est ouvert, pour garder l’accueil léger. Les animations sont désactivées lorsque le navigateur demande une réduction du mouvement.
 
-Les sections PC, Setup, Gadget et Déco annoncent des collections en préparation. Aucun produit fictif ni action d’achat n’est affiché. La navigation utilise des fragments d’URL (`#pc`, `#boitiers`, `#artemis`, etc.) afin que les sections soient partageables sur GitHub Pages sans routage serveur.
+Les sections Boîtier, Gadget et Déco annoncent des collections en préparation. Setup présente trois bandeaux conceptuels (supports de casque, clavier et souris) illustrés par des images IA provisoires sous `public/assets/`. Ces images ne sont pas des représentations de produits définitifs. Aucun produit fictif n’est présenté comme disponible à l’achat. La navigation utilise des fragments d’URL (`#pc`, `#setup`, `#artemis`, etc.) afin que les sections soient partageables sur GitHub Pages sans routage serveur.
 
 ## Modèles 3D
 
