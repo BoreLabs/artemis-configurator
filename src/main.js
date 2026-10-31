@@ -1,5 +1,5 @@
 import './style.css';
-import { sections, sectionLabels, categories } from './data/catalog.js';
+import { sections, mainMenuSections, sectionLabels, categories, setupConcepts } from './data/catalog.js';
 import { artemisConfig, defaultConfiguration } from './data/artemis-config.js';
 import { createConfiguratorStore } from './configurator/state.js';
 import { renderControls } from './ui/controls.js';
@@ -19,17 +19,26 @@ const cards = categories.map(({ id, title, detail }) => `
 `).join('');
 
 function categoryPanel({ id, title }) {
-  const content = id === 'boitiers' ? `
-    <div class="category-feature has-product">
-      <div class="feature-photo" role="img" aria-label="Atelier Bore Labs"></div>
-      <div class="feature-copy">
-        <h2>Artemis</h2>
-        <p>Boîtier modulaire personnalisable en 3D.</p>
-        ${goButton('artemis', 'Configurer Artemis', 'primary-button')}
-      </div>
-    </div>` : `<div class="coming-soon">En préparation</div>`;
+  let content = `<div class="coming-soon">En préparation</div>`;
 
-  return `<section id="panel-${id}" class="page category-page" role="tabpanel" aria-labelledby="tab-${id}" hidden>
+  if (id === 'pc') {
+    content = `<div class="band-list">
+      <button class="product-band is-action" type="button" data-go="artemis">
+        <span class="band-media"><img src="${import.meta.env.BASE_URL}assets/artemis-workshop-oak.png" alt="" loading="lazy" decoding="async" /></span>
+        <span class="band-copy"><span class="band-kicker">PC / CONFIGURATEUR 3D</span><strong>Artemis</strong><span class="band-detail">Configurer Artemis <span aria-hidden="true">↗</span></span></span>
+      </button>
+    </div>`;
+  }
+
+  if (id === 'setup') {
+    content = `<div class="band-list">${setupConcepts.map(({ id: conceptId, title: conceptTitle, image }) => `
+      <article class="product-band is-preview" id="setup-${conceptId}">
+        <div class="band-media"><img src="${import.meta.env.BASE_URL}${image}" alt="" loading="lazy" decoding="async" /></div>
+        <div class="band-copy"><span class="band-kicker">SETUP / VISUEL CONCEPTUEL</span><h2>${conceptTitle}</h2><span class="band-detail">À personnaliser prochainement</span></div>
+      </article>`).join('')}</div>`;
+  }
+
+  return `<section id="panel-${id}" class="page category-page" hidden>
     <div class="category-intro"><h1>${title}<b>.</b></h1></div>
     ${content}
   </section>`;
@@ -38,19 +47,19 @@ function categoryPanel({ id, title }) {
 app.innerHTML = `
   <header class="site-header">
     <button class="wordmark" type="button" data-go="accueil" aria-label="Bore Labs, accueil"><span class="brand-symbol">B<span>·</span></span> BORE <em>LABS</em></button>
-    <nav class="main-nav" aria-label="Navigation principale" role="tablist">
-      ${sections.map((id) => `<button id="tab-${id}" class="nav-link ${id === 'artemis' ? 'nav-featured' : ''}" type="button" role="tab" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
+    <nav class="main-nav" aria-label="Navigation principale">
+      ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
     </nav>
   </header>
   <main>
-    <section id="panel-accueil" class="page home-page" role="tabpanel" aria-labelledby="tab-accueil">
+    <section id="panel-accueil" class="page home-page">
       <div class="hero">
         <div class="hero-copy">
           <h1>DONNEZ<br>FORME À <span>VOTRE</span><br>UNIVERS<b>.</b></h1>
           <p class="hero-description">PC, boîtiers et objets pour votre setup.</p>
-          <div class="hero-actions">${goButton('boitiers', 'Explorer', 'primary-button')}${goButton('artemis', 'Artemis')}</div>
+          <div class="hero-actions">${goButton('pc', 'Explorer', 'primary-button')}</div>
         </div>
-        <div class="hero-image" role="img" aria-label="Atelier Bore Labs"><div class="image-caption"><strong>ARTEMIS</strong></div></div>
+        <div class="hero-image" role="img" aria-label="Atelier Bore Labs"></div>
       </div>
       <section class="catalog-preview" aria-labelledby="catalog-title">
         <h2 id="catalog-title">Collections<b>.</b></h2>
@@ -58,8 +67,8 @@ app.innerHTML = `
       </section>
     </section>
     ${categories.map(categoryPanel).join('')}
-    <section id="panel-artemis" class="page artemis-page" role="tabpanel" aria-labelledby="tab-artemis" hidden>
-      <div class="product-bar"><div><h1>ARTEMIS <span>CONFIGURATEUR 3D</span></h1></div>${goButton('boitiers', 'Boîtier', 'back-button')}</div>
+    <section id="panel-artemis" class="page artemis-page" aria-label="Configurateur Artemis" hidden>
+      <div class="product-bar"><div><h1>ARTEMIS <span>CONFIGURATEUR 3D</span></h1></div>${goButton('pc', 'PC', 'back-button')}</div>
       <div class="configurator-layout">
         <section class="viewer-shell" aria-label="Aperçu 3D du boîtier configuré">
           <div class="viewer-copy"><span>VUE INTERACTIVE / 360°</span><p>Glisser pour tourner · Molette pour zoomer</p></div>
@@ -115,11 +124,12 @@ function ensureViewer() {
 function showSection() {
   const selected = currentSection();
   sections.forEach((id) => {
-    const active = id === selected;
-    document.querySelector(`#panel-${id}`).hidden = !active;
+    document.querySelector(`#panel-${id}`).hidden = id !== selected;
+  });
+  mainMenuSections.forEach((id) => {
     const tab = document.querySelector(`#tab-${id}`);
-    tab.setAttribute('aria-selected', String(active));
-    tab.tabIndex = active ? 0 : -1;
+    if (id === selected || (selected === 'artemis' && id === 'pc')) tab.setAttribute('aria-current', 'page');
+    else tab.removeAttribute('aria-current');
   });
   if (selected === 'artemis') ensureViewer();
   window.scrollTo(0, 0);
@@ -134,9 +144,9 @@ document.querySelectorAll('[data-go]').forEach((button) => button.addEventListen
 document.querySelector('.main-nav').addEventListener('keydown', (event) => {
   if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
   event.preventDefault();
-  const index = sections.indexOf(currentSection());
-  const next = event.key === 'Home' ? 0 : event.key === 'End' ? sections.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + sections.length) % sections.length;
-  const target = document.querySelector(`#tab-${sections[next]}`);
+  const index = mainMenuSections.indexOf(currentSection() === 'artemis' ? 'pc' : currentSection());
+  const next = event.key === 'Home' ? 0 : event.key === 'End' ? mainMenuSections.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + mainMenuSections.length) % mainMenuSections.length;
+  const target = document.querySelector(`#tab-${mainMenuSections[next]}`);
   target.click();
   target.focus();
 });
