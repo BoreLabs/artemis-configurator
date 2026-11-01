@@ -6,8 +6,8 @@ import { renderControls } from './ui/controls.js';
 
 const app = document.querySelector('#app');
 
-function goButton(id, label, className = 'text-button') {
-  return `<button type="button" class="${className} action-button" data-go="${id}"><span class="button-label">${label}</span><span class="button-icon" aria-hidden="true">↗</span></button>`;
+function goButton(id, label, className = 'text-button', icon = '↗') {
+  return `<button type="button" class="${className} action-button" data-go="${id}"><span class="button-label">${label}</span><span class="button-icon" aria-hidden="true">${icon}</span></button>`;
 }
 
 const cards = categories.map(({ id, title, detail }) => `
@@ -25,7 +25,7 @@ function categoryPanel({ id, title }) {
     content = `<div class="band-list">
       <button class="product-band is-action" type="button" data-go="artemis">
         <span class="band-media"><img src="${import.meta.env.BASE_URL}assets/artemis-workshop-oak.png" alt="" loading="lazy" decoding="async" /></span>
-        <span class="band-copy"><span class="band-kicker">PC / CONFIGURATEUR 3D</span><strong>Artemis</strong><span class="band-detail">Configurer Artemis <span aria-hidden="true">↗</span></span></span>
+        <span class="band-copy"><span class="band-kicker">PC & CASE / CONFIGURATEUR 3D</span><strong>Artemis</strong><span class="band-detail">Configurer Artemis <span aria-hidden="true">↗</span></span></span>
       </button>
     </div>`;
   }
@@ -50,15 +50,15 @@ app.innerHTML = `
     <nav class="main-nav" aria-label="Navigation principale">
       ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
     </nav>
-    <button id="tab-nouveautes" class="nav-link novelty-link" type="button" aria-controls="panel-nouveautes" data-go="nouveautes"><span class="nav-flame" aria-hidden="true">🔥</span><span>Nouveauté</span></button>
+    <button id="tab-nouveautes" class="nav-link novelty-link" type="button" aria-controls="panel-nouveautes" data-go="nouveautes"><span class="nav-flame" aria-hidden="true">🔥</span><span>Nouveautés</span></button>
   </header>
   <main>
     <section id="panel-accueil" class="page home-page">
       <div class="hero">
         <div class="hero-copy">
-          <h1>DONNEZ<br>FORME À <span>VOTRE</span><br>UNIVERS<b>.</b></h1>
-          <p class="hero-description">PC, boîtiers et objets pour votre setup.</p>
-          <div class="hero-actions">${goButton('pc', 'Explorer', 'primary-button')}</div>
+          <h1>Personnalisez<br>vos projets<br><span>informatiques</span><br>et créatifs<b>.</b></h1>
+          <p class="hero-description">PC, boîtier, accessoires de setup, décoration, sur mesure.</p>
+          <div class="hero-actions">${goButton('pc', 'Explorer', 'primary-button', '🔎')}</div>
         </div>
         <div class="hero-image" role="img" aria-label="Atelier Bore Labs"></div>
       </div>
@@ -67,7 +67,6 @@ app.innerHTML = `
         <div class="category-grid">${cards}</div>
       </section>
     </section>
-    ${categoryPanel({ id: 'nouveautes', title: 'Nouveauté' })}
     ${categories.map(categoryPanel).join('')}
     <section id="panel-apropos" class="page about-page" aria-labelledby="about-title" hidden>
       <div class="about-hero">
@@ -79,7 +78,7 @@ app.innerHTML = `
         <section class="about-card">
           <span class="about-kicker">01 / LE PROJET</span>
           <h2>Du concept à l’objet<b>.</b></h2>
-          <p>Artemis est le premier configurateur 3D du site. D’autres modèles et accessoires viendront enrichir les collections PC, Setup, Gadget et Déco.</p>
+          <p>Artemis est le premier configurateur 3D du site. D’autres modèles et accessoires viendront enrichir les collections PC & Case, Setup, Gadget et Decoration.</p>
         </section>
         <section class="about-card">
           <span class="about-kicker">02 / À SUIVRE</span>
@@ -127,6 +126,7 @@ document.querySelector('#reset-button').addEventListener('click', () => store.re
 
 function currentSection() {
   const id = window.location.hash.slice(1);
+  if (id === 'boitiers') return 'pc';
   return sections.includes(id) ? id : 'accueil';
 }
 

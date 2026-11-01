@@ -1,24 +1,23 @@
-export const sections = ['nouveautes', 'accueil', 'pc', 'boitiers', 'setup', 'gadget', 'deco', 'artemis', 'apropos'];
+export const sections = ['nouveautes', 'accueil', 'pc', 'setup', 'gadget', 'deco', 'artemis', 'apropos'];
 export const mainMenuSections = sections.filter((id) => !['artemis', 'nouveautes', 'apropos'].includes(id));
 
 export const sectionLabels = {
-  nouveautes: 'Nouveauté',
+  nouveautes: 'Nouveautés',
   accueil: 'Accueil',
-  pc: 'PC',
-  boitiers: 'Boîtier',
+  pc: 'PC & Case',
   setup: 'Setup',
   gadget: 'Gadget',
-  deco: 'Déco',
+  deco: 'Decoration',
   artemis: 'Artemis',
   apropos: 'À propos',
 };
 
 export const categories = [
-  { id: 'pc', title: 'PC', detail: 'Artemis · configurateur 3D' },
-  { id: 'boitiers', title: 'Boîtier', detail: 'En préparation' },
+  { id: 'nouveautes', title: 'Nouveautés', detail: 'En préparation' },
+  { id: 'pc', title: 'PC & Case', detail: 'Artemis · configurateur 3D' },
   { id: 'setup', title: 'Setup', detail: '3 supports à découvrir' },
   { id: 'gadget', title: 'Gadget', detail: 'En préparation' },
-  { id: 'deco', title: 'Déco', detail: 'En préparation' },
+  { id: 'deco', title: 'Decoration', detail: 'En préparation' },
 ];
 
 export const setupConcepts = [
