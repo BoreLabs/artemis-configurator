@@ -46,7 +46,7 @@ function categoryPanel({ id, title }) {
 
 app.innerHTML = `
   <header class="site-header">
-    <button class="wordmark" type="button" data-go="accueil" aria-label="Borlabs, accueil"><img class="brand-logo" src="${import.meta.env.BASE_URL}assets/borlabs-logo.png" alt="" width="48" height="48" /> <span>BORLABS</span></button>
+    <button class="wordmark" type="button" data-go="accueil" aria-label="Bore Labs, accueil"><span>Bore Labs</span></button>
     <nav class="main-nav" aria-label="Navigation principale">
       ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
     </nav>
@@ -60,7 +60,7 @@ app.innerHTML = `
           <p class="hero-description">PC, boîtiers et objets pour votre setup.</p>
           <div class="hero-actions">${goButton('pc', 'Explorer', 'primary-button')}</div>
         </div>
-        <div class="hero-image" role="img" aria-label="Atelier Borlabs"></div>
+        <div class="hero-image" role="img" aria-label="Atelier Bore Labs"></div>
       </div>
       <section class="catalog-preview" aria-labelledby="catalog-title">
         <h2 id="catalog-title">Collections<b>.</b></h2>
@@ -84,7 +84,7 @@ app.innerHTML = `
       </div>
     </section>
   </main>
-  <footer class="site-footer"><span>© BORLABS</span></footer>`;
+  <footer class="site-footer"><span>© BORE LABS</span></footer>`;
 
 const store = createConfiguratorStore(defaultConfiguration);
 const controls = document.querySelector('#controls');

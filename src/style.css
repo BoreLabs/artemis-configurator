@@ -49,7 +49,7 @@ main { min-height: calc(100vh - 148px); }
   display: flex;
   justify-self: start;
   align-items: center;
-  gap: 12px;
+  gap: 0;
   padding: 0;
   border: 0;
   background: none;
@@ -57,10 +57,9 @@ main { min-height: calc(100vh - 148px); }
   font-family: 'Orbitron', 'Segoe UI', sans-serif;
   font-size: 17px;
   font-weight: 800;
-  letter-spacing: .055em;
+  letter-spacing: .025em;
   white-space: nowrap;
 }
-.brand-logo { display: block; width: 48px; height: 48px; flex: none; object-fit: contain; }
 .main-nav { grid-column: 2; display: flex; align-items: center; justify-content: center; gap: 4px; }
 .novelty-link { grid-column: 3; justify-self: end; }
 .nav-link {
@@ -292,8 +291,7 @@ main { min-height: calc(100vh - 148px); }
   .main-nav { grid-template-columns: repeat(3,minmax(0,1fr)); }
 }
 @media (max-width: 480px) {
-  .wordmark { gap: 8px; font-size: 13px; }
-  .brand-logo { width: 40px; height: 40px; }
+  .wordmark { font-size: 13px; }
   .novelty-link { gap: 4px; }
   .nav-link { gap: 4px; padding-inline: 2px; font-size: 11px; }
   .category-intro h1 { font-size: clamp(36px,12vw,56px); }
