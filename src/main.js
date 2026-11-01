@@ -46,10 +46,11 @@ function categoryPanel({ id, title }) {
 
 app.innerHTML = `
   <header class="site-header">
-    <button class="wordmark" type="button" data-go="accueil" aria-label="Bore Labs, accueil"><span class="brand-symbol">B<span>·</span></span> BORE <em>LABS</em></button>
+    <button class="wordmark" type="button" data-go="accueil" aria-label="Borlabs, accueil"><img class="brand-logo" src="${import.meta.env.BASE_URL}assets/borlabs-logo.png" alt="" width="48" height="48" /> <span>BORLABS</span></button>
     <nav class="main-nav" aria-label="Navigation principale">
-      ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}">${id === 'nouveautes' ? '<span class="nav-flame" aria-hidden="true">🔥</span>' : ''}<span>${sectionLabels[id]}</span></button>`).join('')}
+      ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
     </nav>
+    <button id="tab-nouveautes" class="nav-link novelty-link" type="button" aria-controls="panel-nouveautes" data-go="nouveautes"><span class="nav-flame" aria-hidden="true">🔥</span><span>Nouveauté</span></button>
   </header>
   <main>
     <section id="panel-accueil" class="page home-page">
@@ -59,14 +60,14 @@ app.innerHTML = `
           <p class="hero-description">PC, boîtiers et objets pour votre setup.</p>
           <div class="hero-actions">${goButton('pc', 'Explorer', 'primary-button')}</div>
         </div>
-        <div class="hero-image" role="img" aria-label="Atelier Bore Labs"></div>
+        <div class="hero-image" role="img" aria-label="Atelier Borlabs"></div>
       </div>
       <section class="catalog-preview" aria-labelledby="catalog-title">
         <h2 id="catalog-title">Collections<b>.</b></h2>
         <div class="category-grid">${cards}</div>
       </section>
     </section>
-    ${categoryPanel({ id: 'nouveautes', title: 'Nouveautés' })}
+    ${categoryPanel({ id: 'nouveautes', title: 'Nouveauté' })}
     ${categories.map(categoryPanel).join('')}
     <section id="panel-artemis" class="page artemis-page" aria-label="Configurateur Artemis" hidden>
       <div class="product-bar"><div><h1>ARTEMIS <span>CONFIGURATEUR 3D</span></h1></div>${goButton('pc', 'PC', 'back-button')}</div>
@@ -83,7 +84,7 @@ app.innerHTML = `
       </div>
     </section>
   </main>
-  <footer class="site-footer"><span>© BORE LABS</span></footer>`;
+  <footer class="site-footer"><span>© BORLABS</span></footer>`;
 
 const store = createConfiguratorStore(defaultConfiguration);
 const controls = document.querySelector('#controls');
@@ -132,6 +133,9 @@ function showSection() {
     if (id === selected || (selected === 'artemis' && id === 'pc')) tab.setAttribute('aria-current', 'page');
     else tab.removeAttribute('aria-current');
   });
+  const noveltyTab = document.querySelector('#tab-nouveautes');
+  if (selected === 'nouveautes') noveltyTab.setAttribute('aria-current', 'page');
+  else noveltyTab.removeAttribute('aria-current');
   if (selected === 'artemis') ensureViewer();
   window.scrollTo(0, 0);
 }
@@ -145,7 +149,7 @@ document.querySelectorAll('[data-go]').forEach((button) => button.addEventListen
 document.querySelector('.main-nav').addEventListener('keydown', (event) => {
   if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
   event.preventDefault();
-  const index = mainMenuSections.indexOf(currentSection() === 'artemis' ? 'pc' : currentSection());
+  const index = Math.max(0, mainMenuSections.indexOf(currentSection() === 'artemis' ? 'pc' : currentSection()));
   const next = event.key === 'Home' ? 0 : event.key === 'End' ? mainMenuSections.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + mainMenuSections.length) % mainMenuSections.length;
   const target = document.querySelector(`#tab-${mainMenuSections[next]}`);
   target.click();
