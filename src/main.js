@@ -46,7 +46,7 @@ function categoryPanel({ id, title }) {
 
 app.innerHTML = `
   <header class="site-header">
-    <button class="wordmark" type="button" data-go="apropos" aria-label="BORLABS, à propos"><span>BORLABS</span></button>
+    <button class="wordmark" type="button" data-go="apropos" aria-label="BORE LABS, à propos"><span>BORE LABS</span></button>
     <nav class="main-nav" aria-label="Navigation principale">
       ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
     </nav>
@@ -71,7 +71,7 @@ app.innerHTML = `
     ${categories.map(categoryPanel).join('')}
     <section id="panel-apropos" class="page about-page" aria-labelledby="about-title" hidden>
       <div class="about-hero">
-        <span class="about-kicker">BORLABS / HARDWARE & CUSTOM</span>
+        <span class="about-kicker">BORE LABS / HARDWARE & CUSTOM</span>
         <h1 id="about-title">Je suis <span>Bore</span><b>.</b></h1>
         <p>Je suis un jeune entrepreneur passionné par la conception 3D, le hardware et les setups gaming. Avec Bore Labs, je développe des boîtiers PC, des accessoires et des objets à personnaliser.</p>
       </div>
