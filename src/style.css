@@ -301,6 +301,7 @@ main { min-height: calc(100vh - 148px); }
   .nav-link:nth-child(-n+3) { grid-column: span 4; }
   .nav-link:nth-child(n+4) { grid-column: span 3; }
   .nav-link { gap: 4px; padding-inline: 2px; font-size: 11px; }
+  .category-intro h1 { font-size: clamp(36px,12vw,56px); }
   .hero h1 { font-size: clamp(42px,12vw,62px); }
   .hero-actions { align-items: start; flex-direction: column; gap: 10px; }
   .category-grid { grid-template-columns: 1fr; }
