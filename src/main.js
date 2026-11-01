@@ -48,7 +48,7 @@ app.innerHTML = `
   <header class="site-header">
     <button class="wordmark" type="button" data-go="accueil" aria-label="Bore Labs, accueil"><span class="brand-symbol">B<span>·</span></span> BORE <em>LABS</em></button>
     <nav class="main-nav" aria-label="Navigation principale">
-      ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
+      ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}">${id === 'nouveautes' ? '<span class="nav-flame" aria-hidden="true">🔥</span>' : ''}<span>${sectionLabels[id]}</span></button>`).join('')}
     </nav>
   </header>
   <main>
@@ -66,6 +66,7 @@ app.innerHTML = `
         <div class="category-grid">${cards}</div>
       </section>
     </section>
+    ${categoryPanel({ id: 'nouveautes', title: 'Nouveautés' })}
     ${categories.map(categoryPanel).join('')}
     <section id="panel-artemis" class="page artemis-page" aria-label="Configurateur Artemis" hidden>
       <div class="product-bar"><div><h1>ARTEMIS <span>CONFIGURATEUR 3D</span></h1></div>${goButton('pc', 'PC', 'back-button')}</div>
