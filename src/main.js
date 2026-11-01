@@ -72,7 +72,7 @@ app.innerHTML = `
     <section id="panel-apropos" class="page about-page" aria-labelledby="about-title" hidden>
       <div class="about-hero">
         <span class="about-kicker">BORLABS / HARDWARE & CUSTOM</span>
-        <h1 id="about-title">Derrière <span>BORLABS</span><b>.</b></h1>
+        <h1 id="about-title">Je suis <span>Bore</span><b>.</b></h1>
         <p>Je suis un jeune entrepreneur passionné par la conception 3D, le hardware et les setups gaming. Avec Bore Labs, je développe des boîtiers PC, des accessoires et des objets à personnaliser.</p>
       </div>
       <div class="about-grid">
