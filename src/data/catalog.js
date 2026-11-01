@@ -1,5 +1,5 @@
-export const sections = ['nouveautes', 'accueil', 'pc', 'boitiers', 'setup', 'gadget', 'deco', 'artemis'];
-export const mainMenuSections = sections.filter((id) => !['artemis', 'nouveautes'].includes(id));
+export const sections = ['nouveautes', 'accueil', 'pc', 'boitiers', 'setup', 'gadget', 'deco', 'artemis', 'apropos'];
+export const mainMenuSections = sections.filter((id) => !['artemis', 'nouveautes', 'apropos'].includes(id));
 
 export const sectionLabels = {
   nouveautes: 'Nouveauté',
@@ -10,6 +10,7 @@ export const sectionLabels = {
   gadget: 'Gadget',
   deco: 'Déco',
   artemis: 'Artemis',
+  apropos: 'À propos',
 };
 
 export const categories = [

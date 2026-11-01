@@ -46,7 +46,7 @@ function categoryPanel({ id, title }) {
 
 app.innerHTML = `
   <header class="site-header">
-    <button class="wordmark" type="button" data-go="accueil" aria-label="Bore Labs, accueil"><span>Bore Labs</span></button>
+    <button class="wordmark" type="button" data-go="apropos" aria-label="BORLABS, à propos"><span>BORLABS</span></button>
     <nav class="main-nav" aria-label="Navigation principale">
       ${mainMenuSections.map((id) => `<button id="tab-${id}" class="nav-link" type="button" aria-controls="panel-${id}" data-go="${id}"><span>${sectionLabels[id]}</span></button>`).join('')}
     </nav>
@@ -69,6 +69,30 @@ app.innerHTML = `
     </section>
     ${categoryPanel({ id: 'nouveautes', title: 'Nouveauté' })}
     ${categories.map(categoryPanel).join('')}
+    <section id="panel-apropos" class="page about-page" aria-labelledby="about-title" hidden>
+      <div class="about-hero">
+        <span class="about-kicker">BORLABS / HARDWARE & CUSTOM</span>
+        <h1 id="about-title">Derrière <span>BORLABS</span><b>.</b></h1>
+        <p>Je suis un jeune entrepreneur passionné par la conception 3D, le hardware et les setups gaming. Avec Bore Labs, je développe des boîtiers PC, des accessoires et des objets à personnaliser.</p>
+      </div>
+      <div class="about-grid">
+        <section class="about-card">
+          <span class="about-kicker">01 / LE PROJET</span>
+          <h2>Du concept à l’objet<b>.</b></h2>
+          <p>Artemis est le premier configurateur 3D du site. D’autres modèles et accessoires viendront enrichir les collections PC, Setup, Gadget et Déco.</p>
+        </section>
+        <section class="about-card">
+          <span class="about-kicker">02 / À SUIVRE</span>
+          <h2>Suivre Bore Labs<b>.</b></h2>
+          <div class="social-list">
+            <a href="https://github.com/BoreLabs" target="_blank" rel="noopener noreferrer" aria-label="Bore Labs sur GitHub (nouvel onglet)"><span>GitHub</span><span aria-hidden="true">↗</span></a>
+            <a href="https://grabcad.com/bore-2" target="_blank" rel="noopener noreferrer" aria-label="Bore sur GrabCAD (nouvel onglet)"><span>GrabCAD</span><span aria-hidden="true">↗</span></a>
+            <span class="social-pending"><span>YouTube</span><small>Lien à venir</small></span>
+            <span class="social-pending"><span>Discord</span><small>Lien à venir</small></span>
+          </div>
+        </section>
+      </div>
+    </section>
     <section id="panel-artemis" class="page artemis-page" aria-label="Configurateur Artemis" hidden>
       <div class="product-bar"><div><h1>ARTEMIS <span>CONFIGURATEUR 3D</span></h1></div>${goButton('pc', 'PC', 'back-button')}</div>
       <div class="configurator-layout">
@@ -136,6 +160,9 @@ function showSection() {
   const noveltyTab = document.querySelector('#tab-nouveautes');
   if (selected === 'nouveautes') noveltyTab.setAttribute('aria-current', 'page');
   else noveltyTab.removeAttribute('aria-current');
+  const wordmark = document.querySelector('.wordmark');
+  if (selected === 'apropos') wordmark.setAttribute('aria-current', 'page');
+  else wordmark.removeAttribute('aria-current');
   if (selected === 'artemis') ensureViewer();
   window.scrollTo(0, 0);
 }
